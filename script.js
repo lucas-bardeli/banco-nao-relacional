@@ -81,4 +81,4 @@ printjson(
 );
 
 // Exclui o banco de dados. Cuidado!
-db.dropDatabase()
+db.dropDatabase();

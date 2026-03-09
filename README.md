@@ -1,7 +1,7 @@
-# Banco de Dados Não Relacional
+# 🍀 Banco de Dados Não Relacional
 Estudos sobre Banco de Dados Não Relacional com o MongoDB e os comandos em JavaScript.
 
-## Comandos:
+## 🔑 Comandos:
 
 Para executar o arquivo JavaScript no shell do MongoDB, basta usar o comando:
 ```sh
