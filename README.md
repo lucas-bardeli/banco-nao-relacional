@@ -1,41 +1,34 @@
 # 🍀 Banco de Dados Não Relacional
 
-Estudos sobre Banco de Dados Não Relacional com o MongoDB e os comandos em JavaScript.
+Introdução a Bancos de Dados Não Relacionais, MongoDB, BigData, Data Warehouse e outros conceitos.
 
-## 🔑 Comandos
+## 🔑 Comandos Básicos do MongoDB
 
-Para executar o arquivo JavaScript no shell do MongoDB, basta usar o comando:
+> Conexão com o MongoDB e interação com documentos
 
-```bash
-mongosh script.js
-```
+- `mongosh`
+  - Inicia o shell do MongoDB e conecta ao servidor padrão (localhost:27017).
+- `db`
+  - Mostra o banco de dados atualmente selecionado.
+- `use meuBanco`
+  - Se meuBanco não existir, ele será criado assim que um documento for inserido.
+- `show dbs`
+  - Exibe os bancos disponíveis. Se um banco estiver vazio, ele não será listado.
+- `show collections`
+  - Mostra todas as coleções em um banco.
+- `mongosh script.js`
+  - Rodar um arquivo `.js` no MongoDB. Ou abrir o mongosh primeiro e usar `load("script.js");`.
 
-Ou abrir o mongosh e usar o comando:
-
-```js
-load("script.js");
-```
-
-```bash
-db
-# Mostra o banco de dados atualmente selecionado.
-
-use meuBanco
-# Se meuBanco não existir, ele será criado assim que um documento for inserido.
-
-show dbs
-# Exibe os bancos disponíveis. Se um banco estiver vazio, ele não será listado.
-
-show collections
-# Mostra todas as coleções em um banco.
-```
+Veja os exemplos no arquivo [script.js](script.js)
 
 ## ⚙️ Operadores
 
+> Os operadores no MongoDB são instruções especiais utilizadas para manipular e consultar documentos dentro de uma coleção.
+
 ### De Comparação:
 
-Usados para realizar filtros em consultas, comparando valores dentro dos documentos.
-Permitem encontrar documentos que atendam a critérios como igualdade, diferença, maior ou menor que um determinado valor.
+> Usados para realizar filtros em consultas, comparando valores dentro dos documentos.
+> Permitem encontrar documentos que atendam a critérios como igualdade, diferença, maior ou menor que um determinado valor.
 
 - `$eq` (igual a)
   - Este operador retorna documentos cujo valor de um campo específico seja igual ao valor informado.
@@ -50,12 +43,12 @@ Permitem encontrar documentos que atendam a critérios como igualdade, diferenç
 
 ### Lógicos:
 
-Os operadores lógicos combinam múltiplas condições dentro de uma única consulta.
+> Os operadores lógicos combinam múltiplas condições dentro de uma única consulta.
 
 - `$and`
-  - O operador $and exige que todas as condições especificadas sejam verdadeiras.
+  - O operador `$and` exige que todas as condições especificadas sejam verdadeiras.
 - `$or`
-  - O operador $or retorna documentos que satisfaçam pelo menos uma das condições especificadas.
+  - O operador `$or` retorna documentos que satisfaçam pelo menos uma das condições especificadas.
 - `$not`
   - Este operador nega uma condição específica.
 - `$nor`
@@ -63,7 +56,7 @@ Os operadores lógicos combinam múltiplas condições dentro de uma única cons
 
 ### De Elemento:
 
-Permitem verificar a existência de campos em um documento ou o tipo de dado armazenado neles.
+> Permitem verificar a existência de campos em um documento ou o tipo de dado armazenado neles.
 
 - `$exists`
   - Verifica se um campo está presente ou não em um documento.
