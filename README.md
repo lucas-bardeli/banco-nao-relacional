@@ -19,7 +19,7 @@ Introdução a Bancos de Dados Não Relacionais, MongoDB, BigData, Data Warehous
 - `mongosh script.js`
   - Rodar um arquivo `.js` no MongoDB. Ou abrir o mongosh primeiro e usar `load("script.js");`.
 
-Veja os exemplos no arquivo [script.js](script.js)
+Veja os exemplos no arquivo [script.js](scripts/script.js)
 
 ## ⚙️ Operadores
 
@@ -63,7 +63,7 @@ Veja os exemplos no arquivo [script.js](script.js)
 - `$type`
   - Filtra documentos com base no tipo de dado armazenado em um campo.
 
-Veja os exemplos no arquivo [operadores.js](operadores.js)
+Veja os exemplos no arquivo [operadores.js](scripts/operadores.js)
 
 ## 🧮 Modificando a Estrutura de Documentos
 
@@ -104,4 +104,69 @@ Veja os exemplos no arquivo [operadores.js](operadores.js)
 - `$pullAll` -> Remove múltiplos valores específicos de um array.
 - `$each` -> Usado com `$push` para adicionar múltiplos elementos ao array.
 
-Veja os exemplos no arquivo [estruturas.js](estruturas.js)
+Veja os exemplos no arquivo [estruturas.js](scripts/estruturas.js)
+
+## 📍 Índices
+
+> Os índices são estruturas de dados especiais que armazenam uma parte dos dados de uma coleção de forma ordenada, facilitando buscas rápidas.
+
+### Índices Simples:
+
+> Usando apenas um campo.
+
+- Por padrão, o MongoDB já cria um índice no campo `_id`, mas podemos criar outros para melhorar o desempenho das buscas.
+
+- Criar um índice em um único campo
+  - `db.usuarios.createIndex({ email: 1 })`
+- Buscas pelo campo "email" serão muito mais rápidas:
+  - `db.usuarios.find({ email: "joao@email.com" })`
+
+### Índices Compostos:
+
+> Usando mais de um campo.
+
+- Quando fazemos buscas com múltiplos critérios frequentemente, um índice composto pode ser mais eficiente.
+
+- Criar um índice composto para **nome** e **idade**:
+  - `db.usuarios.createIndex({ nome: 1, idade: -1 })`
+  - Este índice ajuda buscas ordenadas pelo nome em ordem crescente e idade em ordem decrescente.
+- Essa consulta usará o índice:
+  - `db.usuarios.find({ nome: "Carlos" }).sort({ idade: -1 })`
+
+### Índices em Arrays:
+
+> Se um campo for um array e quisermos pesquisar dentro dele, podemos criar um índice multi key.
+
+- Criar um índice para um array:
+  - `db.pedidos.createIndex({ itens: 1 })`
+  - Isso melhora buscas em coleções onde **itens** é um array.
+
+### Índices em Campos Textuais:
+
+> Se precisamos buscar palavras em campos de texto, o índice textual é útil.
+
+- Criar um índice para busca textual:
+  - `db.produtos.createIndex({ descricao: "text" })`
+- Agora podemos buscar palavras dentro desse campo:
+  - `db.produtos.find({ $text: { $search: "notebook" } })`
+  - Retorna todos os produtos cuja **descricao** contém "notebook".
+
+### Índices Geoespaciais:
+
+> Se armazenarmos coordenadas geográficas, podemos criar índices geoespaciais (2dsphere).
+
+- Criar um índice geoespacial:
+  - `db.locais.createIndex({ localizacao: "2dsphere" })`
+  - Agora podemos buscar locais próximos de um ponto específico.
+
+### Espaço Ocupado por Índices
+
+> Quanto espaço um índice ocupa?
+
+- Se quisermos ver o espaço total ocupado pelos índices de uma coleção, usamos:
+
+### Verificar uso de um Índice
+
+### Remoção de Índices
+
+### Avaliação de Desempenho de Índices

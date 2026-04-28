@@ -17,7 +17,8 @@ db.usuarios.insertMany([
 console.log("\nTodos os usuários:");
 // printjson() para exibir no terminal.
 printjson(
-  db.usuarios.find().pretty(), // Exibe todos os documentos da coleção "usuarios".
+  // Exibe todos os documentos da coleção "usuarios".
+  db.usuarios.find().pretty(),
 );
 
 console.log("\nFiltrar documentos (exemplo: encontrar usuários com idade 25):");
@@ -27,12 +28,8 @@ console.log(
   "\nFiltrar e exibir apenas alguns campos. Retorna apenas o campo nome, excluindo _id:",
 );
 printjson(
-  db.usuarios
-    .find(
-      { cidade: "Belo Horizonte" },
-      { nome: 1, _id: 0 }, // 1 e 0 definem quais campos irão aparecer na consulta. Campos com valor 0 (false) não aparecem.
-    )
-    .pretty(),
+  // 1 e 0 definem quais campos irão aparecer na consulta. Campos com valor 0 (false) não aparecem.
+  db.usuarios.find({ cidade: "Belo Horizonte" }, { nome: 1, _id: 0 }).pretty(),
 );
 
 // Atualizar um único documento.
