@@ -94,3 +94,26 @@ db.produtos.find({
 // $type
 // Retorna todos os documentos onde o campo preco seja do tipo double.
 db.produtos.find({ preco: { $type: "double" } });
+
+
+// Exercícios de Operadores:
+
+// 1)
+// Utilize o operador $gte para encontrar todos os produtos com preço maior ou igual a 2000.
+db.produtos.find({ preco: { $gte: 2000 } });
+
+// 2)
+// Filtre os produtos que pertencem à categoria "Móveis" e possuem avaliação superior a 4.5 usando $and.
+db.produtos.find({
+  $and: [{ categoria: "Móveis" }, { avaliacao: { $gt: 4.5 } }],
+});
+
+// 3)
+// Use $or para retornar todos os produtos que custam menos de 2000 ou têm estoque maior que 20.
+db.produtos.find({
+  $or: [{ preco: { $lt: 2000 } }, { estoque: { $gt: 20 } }],
+});
+
+// 4)
+// Escreva uma consulta que retorne apenas os produtos que possuem o campo avaliacao.
+db.produtos.find({ avaliacao: { $exists: true } });

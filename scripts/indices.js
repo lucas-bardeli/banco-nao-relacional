@@ -6,6 +6,19 @@ for (let i = 0; i < 100000; i++) {
   });
 }
 
+// Os índices são estruturas de dados especiais que armazenam uma parte
+// dos dados de uma coleção de forma ordenada, facilitando buscas rápidas.
+
+// Sem índice: O MongoDB precisa percorrer todos os documentos para encontrar os resultados (full collection scan).
+
+// Podemos analisar como uma consulta está sendo processada com o método explain():
+db.usuarios.find({ email: "usuario98765@email.com" }).explain("executionStats");
+
+db.usuarios.createIndex({ email: 1 });
+
+// Desvantagem dos índices: Eles ocupam espaço extra em disco e afetam a performance de escrita,
+// pois sempre que um documento é inserido / atualizado, os índices precisam ser ajustados.
+
 // ÍNDICES SIMPLES
 // Usando apenas um campo
 db.pessoas.find({ email: "joao@email.com" }).explain("executionStats");
