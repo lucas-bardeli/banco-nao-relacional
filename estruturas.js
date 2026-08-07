@@ -1,3 +1,5 @@
+/* MODIFICANDO A ESTRUTURA DE DOCUMENTOS */
+
 // Base de dados exemplo:
 use("loja");
 
@@ -33,12 +35,15 @@ db.usuarios.insertMany([
 
 // ATUALIZAÇÃO DE DOCUMENTOS:
 
+// Atualiza apenas um documento que corresponde ao filtro:
 db.usuarios.updateOne({ username: "joao" }, { $set: { age: 25 } });
 // O usuário "joao" agora tem age: 25.
 
+// Atualiza todos os documentos que correspondam ao filtro:
 db.usuarios.updateMany({ active: true }, { $set: { premium: true } });
 // Todos os usuários ativos agora são premium.
 
+// Substitui um documento inteiro por um novo:
 db.usuarios.replaceOne(
   { username: "maria" },
   {
@@ -55,24 +60,29 @@ db.usuarios.replaceOne(
 // MODIFICAÇÃO DE CAMPOS:
 
 // $set
+// Define ou altera um campo específico:
 db.usuarios.updateOne({ username: "joao" }, { $set: { premium: true } });
 // "joao" agora é premium.
 
 // $unset
+// Remove um campo:
 db.usuarios.updateOne({ username: "carlos" }, { $unset: { premium: "" } });
 // Remove o campo 'premium' do usuário "carlos".
 
 // $rename
+// Renomeia um campo:
 db.usuarios.updateOne({ username: "maria" }, { $rename: { age: "yearsOld" } });
 // O campo 'age' foi renomeado para 'yearsOld' para "maria".
 
 // OPERAÇÕES MATEMÁTICAS:
 
 // $inc
+// Incrementa um valor:
 db.usuarios.updateOne({ username: "joao" }, { $inc: { age: 1 } });
 // A idade de "joao" aumenta em 1.
 
 // $mul
+// Multiplica um valor:
 db.usuarios.updateOne({ username: "carlos" }, { $mul: { age: 2 } });
 // A idade de "carlos" dobra.
 
@@ -87,18 +97,22 @@ db.usuarios.updateOne({ username: "maria" }, { $max: { yearsOld: 35 } });
 // OPERAÇÕES EM ARRAYS:
 
 // $push
+// Adiciona um elemento ao array:
 db.usuarios.updateOne({ username: "maria" }, { $push: { hobbies: "guitar" } });
 // "guitar" é adicionado ao array hobbies de "maria".
 
 // $pop
+// Remove o primeiro ou último elemento:
 db.usuarios.updateOne({ username: "joao" }, { $pop: { hobbies: -1 } });
 // Remove o primeiro item do array hobbies de "joao".
 
 // $pull
+// Remove elementos específicos:
 db.usuarios.updateOne({ username: "carlos" }, { $pull: { hobbies: "gaming" } });
 // Remove "gaming" do array hobbies de "carlos".
 
 // $addToSet
+// Adiciona um item se ele não existir:
 db.usuarios.updateOne(
   { username: "joao" },
   { $addToSet: { hobbies: "chess" } },
@@ -106,40 +120,15 @@ db.usuarios.updateOne(
 // "chess" só será adicionado ao array hobbies de "joao" se ainda não existir.
 
 // $each
+// Adiciona múltiplos elementos:
 db.usuarios.updateOne(
   { username: "carlos" },
   { $push: { hobbies: { $each: ["coding", "music"] } } },
 );
 // "coding" e "music" são adicionados a hobbies de "carlos".
 
-// Aviso! Sem o $each iria adicionar um novo Array dentro do Array de hobbies.
+// Aviso! Sem o $each iria adicionar um array dentro do array de hobbies.
 db.usuarios.updateOne(
   { username: "carlos" },
   { $push: { hobbies: ["coding", "music"] } },
 );
-
-db.menu.insertMany([
-  { _id: 1, dish: "Pizza", ingredients: ["Dough", "Tomato Sauce", "Cheese"], price: 30 },
-  { _id: 2, dish: "Sushi", ingredients: ["Rice", "Fish", "Seaweed"], price: 40 },
-  { _id: 3, dish: "Taco", ingredients: ["Tortilla", "Beef", "Cheese"], price: 15 },
-]);
-
-
-// EXERCÍCIO 2
-
-// a)
-// O restaurante decidiu aumentar o preço de todos os pratos em 10%. Atualize os preços.
-db.menu.updateMany({}, { $mul: { price: 1.1 } });
-
-// b)
-// O Taco agora vem com "Guacamole". Adicione esse ingrediente à lista 'ingredients'.
-db.menu.updateOne({ dish: "Taco" }, { $push: { ingredients: "Guacamole" } });
-
-// c)
-// O Sushi teve um reajuste e agora custa 35. Atualize esse valor.
-db.menu.updateOne({ dish: "Sushi" }, { $set: { price: 35 } });
-
-// d)
-// O restaurante removeu "Beef" dos Tacos e substituiu por "Chicken". Atualize a lista de ingredientes do Taco.
-db.menu.updateOne({ dish: "Taco" }, { $pull: { ingredients: "Beef" } });
-db.menu.updateOne({ dish: "Taco" }, { $push: { ingredients: "Chicken" } });

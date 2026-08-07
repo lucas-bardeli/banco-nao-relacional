@@ -1,7 +1,9 @@
+/* GESTÃO DE USUÁRIOS E PERMISSÕES */
+
 // Crie um usuário:
 db.createUser({
   user: "adminUser",
-  pwd: "Fatec@2025",
+  pwd: "Fatec@2026",
   roles: [
     { role: "userAdminAnyDatabase", db: "admin" },
     "readWriteAnyDatabase",
@@ -14,10 +16,12 @@ db.getUsers();
 // Ver todas as roles de um usuário:
 db.getUser("nomeUsuario");
 
+// Ver todas roles disponíveis:
+db.getRoles({ showBuiltinRoles: true });
+
 /* ROLES PERSONALIZADAS */
 
-// Criar roles específicas com permissões granulares, por exemplo, permitir apenas
-// leitura da coleção clientes:
+// Criar roles específicas com permissões granulares, por exemplo, permitir apenas leitura da coleção clientes:
 db.createRole({
   role: "leitorApenasClientes",
   privileges: [
@@ -43,7 +47,7 @@ db.dropRole("leitorApenasClientes");
 
 /* ATRIBUIR ROLES A USUÁRIOS */
 
-// Atribuindo Role ao Usuário
+// Atribuindo Role ao Usuário:
 db.grantRolesToUser("joao", [{ role: "leitorApenasClientes", db: "meuBanco" }]);
 
 // Removendo Role de Usuário:
@@ -65,7 +69,7 @@ db.revokePrivilegesFromRole("leitorApenasClientes", [
 
 /* MANIPULAÇÃO DE USUÁRIOS */
 
-// Criação
+// Criação:
 db.createUser({
   user: "joao",
   pwd: "senha123",

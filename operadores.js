@@ -1,3 +1,5 @@
+/* OPERADORES NO MONGODB */
+
 // Base de dados exemplo:
 use("loja");
 
@@ -30,23 +32,23 @@ db.produtos.insertMany([
 
 // OPERADORES DE COMPARAÇÃO:
 
-// $eq
+// $eq (igual a)
 // Retornará o produto "Smartphone Samsung", pois seu preço é exatamente 2500.
 db.produtos.find({ preco: { $eq: 2500 } });
 
-// $ne
+// $ne (diferente de)
 // Aqui, serão retornados todos os produtos exceto o "Notebook Dell", pois seu preço é 4500.
 db.produtos.find({ preco: { $ne: 4500 } });
 
-// $gt
+// $gt (maior que)
 // Retornará tanto o "Notebook Dell" quanto o "Smartphone Samsung", pois seus preços são superiores a 2000.
 db.produtos.find({ preco: { $gt: 2000 } });
 
-// $lt
+// $lt (menor que)
 // Retornará os produtos "Smartphone Samsung" e "Cadeira Gamer".
 db.produtos.find({ preco: { $lt: 3000 } });
 
-// $gte e $lte
+// $gte e $lte (maior ou igual / menor ou igual)
 // Retornará todos os produtos com preço entre 1000 e 3000, incluindo esses valores.
 db.produtos.find({
   preco: {
@@ -78,7 +80,7 @@ db.produtos.find({
 });
 
 // $nor
-// Serão retornados apenas produtos que não sejam da categoria "Eletrônicos" e que tenham preço inferior ou igual a 4000.
+// Serão retornados apenas produtos que não sejam da categoria "Eletrônicos" ou que tenham preço inferior ou igual a 4000.
 db.produtos.find({
   $nor: [{ categoria: "Eletrônicos" }, { preco: { $gt: 4000 } }],
 });
@@ -94,26 +96,3 @@ db.produtos.find({
 // $type
 // Retorna todos os documentos onde o campo preco seja do tipo double.
 db.produtos.find({ preco: { $type: "double" } });
-
-
-// Exercícios de Operadores:
-
-// 1)
-// Utilize o operador $gte para encontrar todos os produtos com preço maior ou igual a 2000.
-db.produtos.find({ preco: { $gte: 2000 } });
-
-// 2)
-// Filtre os produtos que pertencem à categoria "Móveis" e possuem avaliação superior a 4.5 usando $and.
-db.produtos.find({
-  $and: [{ categoria: "Móveis" }, { avaliacao: { $gt: 4.5 } }],
-});
-
-// 3)
-// Use $or para retornar todos os produtos que custam menos de 2000 ou têm estoque maior que 20.
-db.produtos.find({
-  $or: [{ preco: { $lt: 2000 } }, { estoque: { $gt: 20 } }],
-});
-
-// 4)
-// Escreva uma consulta que retorne apenas os produtos que possuem o campo avaliacao.
-db.produtos.find({ avaliacao: { $exists: true } });

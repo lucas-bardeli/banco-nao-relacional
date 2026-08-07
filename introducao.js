@@ -1,4 +1,6 @@
-db = db.getSiblingDB("meuBanco"); // Funciona melhor em scripts em vez do "use meuBanco".
+/* INTRODUÇÃO AO MONGODB */
+
+use("meuBanco");
 // A variável predefinida db refere-se ao banco de dados atualmente selecionado.
 
 // MongoDB cria coleções automaticamente quando documentos são inseridos.
@@ -14,22 +16,16 @@ db.usuarios.insertMany([
   { nome: "Lucas", idade: 20, cidade: "São Paulo" },
 ]);
 
-console.log("\nTodos os usuários:");
-// printjson() para exibir no terminal.
-printjson(
-  // Exibe todos os documentos da coleção "usuarios".
-  db.usuarios.find().pretty(),
-);
+// Exibe todos os documentos da coleção "usuarios".
+db.usuarios.find().pretty();
 
-console.log("\nFiltrar documentos (exemplo: encontrar usuários com idade 25):");
-printjson(db.usuarios.find({ idade: 25 }).pretty());
+// Filtrar documentos (exemplo: encontrar usuários com idade 25).
+db.usuarios.find({ idade: 25 }).pretty();
 
-console.log(
-  "\nFiltrar e exibir apenas alguns campos. Retorna apenas o campo nome, excluindo _id:",
-);
-printjson(
-  // 1 e 0 definem quais campos irão aparecer na consulta. Campos com valor 0 (false) não aparecem.
-  db.usuarios.find({ cidade: "Belo Horizonte" }, { nome: 1, _id: 0 }).pretty(),
+// Filtrar e exibir apenas alguns campos. Retorna apenas o campo nome, excluindo _id.
+db.usuarios.find(
+  { cidade: "Rio de Janeiro" },
+  { nome: 1, _id: 0 }, // 1 e 0 definem quais campos irão aparecer na consulta. Campos com valor 0 (false) não aparecem.
 );
 
 // Atualizar um único documento.
@@ -39,9 +35,10 @@ db.usuarios.updateOne({ nome: "Alice" }, { $set: { idade: 26 } });
 db.usuarios.updateMany({ cidade: "São Paulo" }, { $set: { estado: "SP" } });
 
 // Adiconar um novo valor a um array dentro do documento.
+db.usuarios.updateOne({ nome: "Alice" }, { $push: { hobbies: "leitura" } });
 db.usuarios.updateOne({ nome: "Bob" }, { $push: { hobbies: "futebol" } });
 
-// Remover um único documento
+// Remover um único documento.
 db.usuarios.deleteOne({ nome: "Carlos" });
 
 // Remove todos os usuários com menos de 25 anos.
@@ -57,9 +54,6 @@ db.usuarios.insertOne({
     { id_pedido: 102, produto: "Smartphone", quantidade: 1, preco: 2000 },
   ],
 });
-
-console.log("\nResultado final:");
-printjson(db.usuarios.find().pretty());
 
 // Exclui o banco de dados. Cuidado!
 db.dropDatabase();
